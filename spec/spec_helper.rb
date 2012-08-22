@@ -8,6 +8,18 @@ Spork.prefork do
   # if you change any configuration or code from libraries loaded here, you'll
   # need to restart spork for it take effect.
 
+  # RubyMine needs to load special test formatters for its built-in RSpec and
+  # Cucumber runners to work. You can easily configure it to talk to a Spork
+  # server when running tests, but you’ll get a LoadError (“no such file to
+  # load — teamcity/spec/runner/formatter/teamcity/formatter”) with a vanilla
+  # Spork setup because the server won’t be able to find the RubyMine formatter
+  # libraries.
+  # The solution is to add the requisite paths in the Spork prefork block.
+  if ENV["RUBYMINE_HOME"]
+    $:.unshift(File.expand_path("rb/testing/patch/common", ENV["RUBYMINE_HOME"]))
+    $:.unshift(File.expand_path("rb/testing/patch/bdd", ENV["RUBYMINE_HOME"]))
+  end
+
   # This file is copied to spec/ when you run 'rails generate rspec:install'
   ENV["RAILS_ENV"] ||= 'test'
   require File.expand_path("../../config/environment", __FILE__)
