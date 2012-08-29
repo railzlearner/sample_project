@@ -41,6 +41,13 @@ describe "UserPages" do
       end
     end
 
+    #describe "with vaild information" do
+    #  before let(:user) { FactoryGirl.create(:user)}
+    #  it "should flash the success message" do
+    #    it { should have_selector('div',    text: 'Welcome to the Sample App!') }
+    #  end
+    #end
+
     it { should have_selector('h1',    text: 'Sign up') }
     it { should have_selector('title', text: full_title('Sign up')) }
   end
