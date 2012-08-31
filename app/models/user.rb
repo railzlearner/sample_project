@@ -11,6 +11,8 @@
 
 class User < ActiveRecord::Base
   attr_accessible :email, :name, :password, :password_confirmation
+  has_secure_password
+  has_many :microposts
 
   validates :name, presence: true, length: { maximum: 50 }
 
@@ -23,8 +25,6 @@ class User < ActiveRecord::Base
   validates :password, presence: true, length: { minimum: 6 }
 
   validates :password_confirmation, presence: true
-
-  has_secure_password
 
   private
     def create_remember_token
